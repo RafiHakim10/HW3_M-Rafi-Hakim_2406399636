@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ready Player One - Facebook Style</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> <!-- Bootstrap Icons -->
+    <style>
+        body {
+            background-color: #e9ebee; /* Facebook-like light gray background */
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background-color: #3b5998; /* Facebook blue */
+            color: white;
+            width: 250px;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sidebar shadow */
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+        }
+        .sidebar a:hover {
+            background-color: #2d4373; /* Darker blue on hover */
+        }
+        .content {
+            margin-left: 250px; /* Space for the sidebar */
+            padding: 20px;
+            width: 100%;
+        }
+        .facebook-header {
+            background-color: #3b5998; /* Facebook blue */
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+        .facebook-header img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #fff; /* White border for profile picture */
+        }
+        .facebook-header .profile {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .facebook-header .title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            vertical-align: middle;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Add text shadow for the title */
+        }
+        .post-card {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .post-card:hover {
+            transform: translateY(-10px); /* Hover effect */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+        .poster img {
+            width: 50%; /* Smaller poster size */
+            display: block;
+            margin: 0 auto;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out; /* Smooth zoom effect */
+        }
+        .poster img:hover {
+            transform: scale(1.05); /* Hover zoom effect */
+        }
+        .post-header, .post-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .post-header img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #dee2e6; /* Add border around profile */
+        }
+        .post-header .username {
+            margin-left: 10px;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        .post-footer .actions {
+            color: #6c757d;
+        }
+        .comments-section {
+            margin-top: 20px;
+        }
+        .comment {
+            display: flex;
+            align-items: start;
+            margin-bottom: 15px;
+        }
+        .comment img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+        .comment-body {
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 15px;
+            max-width: 80%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+        .comment-input {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .comment-input input {
+            flex: 1;
+            border-radius: 50px;
+            padding: 10px 15px;
+            border: 1px solid #dee2e6;
+            margin-right: 10px;
+            transition: box-shadow 0.3s ease;
+        }
+        .comment-input input:focus {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow on focus */
+        }
+        .comment-input button {
+            border-radius: 50px;
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .comment-input button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 4px 8px rgba(0, 86, 179, 0.2);
+        }
+        #like-icon {
+            color: #6c757d; /* Default gray color */
+            transition: color 0.3s ease; /* Smooth transition for color change */
+        }
+        #like-btn.liked #like-icon {
+            color: red; /* Red color when liked */
+        }
+         /* Add the heart animation style */
+         .like-animation {
+            animation: heart-bounce 0.6s ease;
+        }
+        @keyframes heart-bounce {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Kimi's 3rd HW</h2>
+        <a href="Home.html"><i class="bi bi-house-door"></i> Home</a>
+        <a href="Message.html"><i class="bi bi-chat-dots"></i> Messages</a>
+        <a href="Contact Me.html"><i class="bi bi-bell"></i> Contact Me</a>
+    </div>
+    <!-- Toggle Button -->
+    <button class="toggle-btn" id="toggle-btn">☰</button>
+
+     <!-- Main Content -->
+     <div class="content" id="content">
+         <!-- Facebook-style header -->
+         <div class="facebook-header">
+             <span class="profile"><img src="https://media.licdn.com/dms/image/v2/D5603AQHeccZFjxL-wg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723731251133?e=1731542400&v=beta&t=-wMEpJM7Qr-lGHpG7sUPLSLZh4k2zde5mspqYQ72K30"></span>
+             <span class="title">Facebook</span>
+         </div>     
+        
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- Post Card -->
+                    <div class="post-card">
+                        <!-- Post Header -->
+                        <div class="post-header">
+                            <div class="user-info d-flex">
+                                <img src="https://media.licdn.com/dms/image/v2/D5603AQHeccZFjxL-wg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723731251133?e=1731542400&v=beta&t=-wMEpJM7Qr-lGHpG7sUPLSLZh4k2zde5mspqYQ72K30" alt="User Profile">
+                                <div class="username">M Rafi Hakim</div>
+                            </div>
+                            <div class="post-time">2 hrs ago</div>
+                        </div>
+    
+                    <!-- Poster Image -->
+                    <div class="poster my-3">
+                        <a href="https://www.youtube.com/watch?v=LiK2fhOY0nE" target="_blank">
+                           <img src="https://th.bing.com/th/id/OIP.0U2Uz71YZlhWrqeIiyi1EwAAAA?rs=1&pid=ImgDetMain" alt="Ready Player One Poster" title="Click Here to Watch Ready Player One Trailer!">
+                        </a>
+                    </div>
+    
+                    <!-- Caption -->
+                    <div class="caption text-center my-3">
+                        <strong>Ready Player One 2018 ‧ Sci-fi/Action ‧ 2h 19m</strong>
+                    </div>
+    
+                    <!-- Post Footer -->
+                    <div class="post-footer">
+                        <div class="caption">kimi added a quote to his post <em>"Jika Kimi Memiliki Semua Waktu dan Resource, Kimi Ingin Membuat Sebuah Dunia Digital Menggunakan VR dan Alat Khusus Dimana Pengguna Dapat Merasakan Sensasi Seperti Di Dunia Sungguhan, Bisa Bekerja, Balapan, Berperang, dan lain lain seperti di Film Ready Player One Ini"</em>! 🎮🕶️ #SciFi #EpicMovie</div>
+                    </div>
+
+                    <!-- Like Button -->
+                    <div class="actions d-flex align-items-center mt-3">
+                        <button id="like-btn" class="btn btn-outline-primary me-2">
+                            <i class="bi bi-heart" id="like-icon"></i>
+                            <span id="like-count">7653</span>
+                        </button>
+                        <span class="ms-2">People agree with this post</span> <!-- Added "Likes" label -->
+                    </div>
+
+<!-- JavaScript to handle like button functionality -->
+<script>
+document.getElementById('like-btn').addEventListener('click', function() {
+    var likeBtn = this;
+    var likeIcon = likeBtn.querySelector('#like-icon');
+    var likeCount = document.getElementById('like-count');
+    
+    if (likeBtn.classList.contains('liked')) {
+        likeBtn.classList.remove('liked');
+        likeIcon.style.color = '#6c757d'; // Default gray color
+        likeCount.textContent = parseInt(likeCount.textContent) - 1;
+    } else {
+        likeBtn.classList.add('liked');
+        likeIcon.style.color = 'red'; // Red color when liked
+        likeCount.textContent = parseInt(likeCount.textContent) + 1;
+    }
+});
+</script>
+
+    
+                    <!-- Comments Section -->
+                    <div class="comments-section">
+                        <div class="comment">
+                            <img src="https://media.licdn.com/dms/image/v2/C4D03AQE6aeZDdpJKvA/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1655888199198?e=1731542400&v=beta&t=SG23C_ZLJYpW8MgtgfVDfiMkJgNvI4epttnHVWEUEZk" alt="User">
+                            <div class="comment-body">
+                                <strong>Johan Sulaiman:</strong> Programnya sangat well constructed! Ide2 kamu menarik, tentang nanotechnology, VR, dan Ready Player One. Tajamkan dan Matangkan Ide kamu sehingga menelurkan suatu masterpiece pribadi yang sesungguhnya :)
+                                Score: 10/10
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img src="https://vokasi.ui.ac.id/web/wp-content/uploads/2022/07/Rangga-Wiwesa-2022-scaled-e1657191718177.jpg" alt="User">
+                            <div class="comment-body">
+                                <strong>Rangga Wisesa:</strong> Saya Suka Mahasiswa Seperti Kamu, Berpikir Kreatif dan Out of The Box. Keep Up The Good Work! Saya Bangga dengan Kamu.
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <img src="https://rb.gy/jdpt88" alt="User">
+                            <div class="comment-body">
+                                <strong>Dawsan Nomero:</strong> Yang ini Keren Nih, Saya Sebagai Wiradha Baru Pertama Kali Melihat Yang Sebagus Ini. Jangan Lupa Join Peminatan HCI Ya!
+                            </div>
+                        </div>
+                        
+                        <!-- Comment Input -->
+                        <div class="comment-input">
+                            <img src="https://media.licdn.com/dms/image/v2/D5603AQHeccZFjxL-wg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1723731251133?e=1731542400&v=beta&t=-wMEpJM7Qr-lGHpG7sUPLSLZh4k2zde5mspqYQ72K30" alt="User Profile" style="width: 40px; height: 40px; border-radius: 50%;">
+                            <input type="text" class="form-control" placeholder="Write a comment...">
+                            <button class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap JS and Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+    
+    </body>
+    </html>
